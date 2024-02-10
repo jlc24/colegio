@@ -16,13 +16,14 @@ return new class extends Migration
             $table->date('dia_semana');
             $table->time('hora_inicio');
             $table->time('hora_fin');
-            $table->foreignId('ca_id');
-            $table->foreignId('pa_id');
+            $table->unsignedBigInteger('ca_id');
+            $table->unsignedBigInteger('pa_id');
             $table->string('gestion', 10);
-            $table->integer('estado');
-            $table->foreignId('curso_aula_id');
-            $table->foreignId('profesor_asignatura_id');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
+
+            $table->foreign('ca_id')->references('id')->on('curso_aulas');
+            $table->foreign('pa_id')->references('id')->on('profesor_asignaturas');
         });
     }
 

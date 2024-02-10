@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->integer('capacidad');
             $table->string('ubicacion', 50);
-            $table->integer('estado');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
         });
     }

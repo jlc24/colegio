@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('nivels', function (Blueprint $table) {
             $table->id();
             $table->string('nivel', 20);
-            $table->integer('estado');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
         });
     }

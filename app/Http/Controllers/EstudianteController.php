@@ -11,50 +11,92 @@ use Illuminate\View\View;
 
 class EstudianteController extends Controller
 {
-    public function index(Request $request): Response
+    public function index()
+    {
+        return view('estudiante.index');
+    }
+
+    public function create(Request $request)
+    {
+        //
+    }
+
+    public function store(EstudianteStoreRequest $request)
+    {
+        $request->validated();
+        $existe = Estudiante::where([
+            ['ci', $request->input('ci')],
+            ['nombres', $request->input('nombres')],
+            ['apellidos', $request->input('apellidos')]
+        ])->exists();
+
+        if ($existe) {
+            return response()->json([
+                'resultado' => 'si'
+            ]);
+        }else{
+            Estudiante::create([
+                'ci' => $request->input('ci'),
+                'nombres' => $request->input('nombres'),
+                'apellidos' => $request->input('apellidos'),
+                'direccion' => $request->input('direccion'),
+                'fec_nac' => $request->input('fec_nac'),
+                'genero' => $request->input('genero'),
+                'email' => $request->input('email'),
+                'telefono' => $request->input('telefono')
+            ]);
+
+            return response()->json([
+                'resultado' => 'no'
+            ]);
+        }
+    }
+
+    public function show()
     {
         $estudiantes = Estudiante::all();
-
-        return view('estudiante.index', compact('estudiantes'));
+        return response()->json($estudiantes);
     }
 
-    public function create(Request $request): Response
+    public function edit($id)
     {
-        return view('estudiante.create');
+        $estudiante = Estudiante::find($id);
+        return response()->json($estudiante);
     }
 
-    public function store(EstudianteStoreRequest $request): Response
+    public function update(EstudianteUpdateRequest $request, $id)
     {
-        $estudiante = Estudiante::create($request->validated());
-
-        $request->session()->flash('estudiante.id', $estudiante->id);
-
-        return redirect()->route('estudiante.index');
+        $request->validated();
+        
+        $estudiante = Estudiante::find($id);
+        $estudiante->update([
+            'ci' => $request->input('ci'),
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'direccion' => $request->input('direccion'),
+            'fec_nac' => $request->input('fec_nac'),
+            'genero' => $request->input('genero'),
+            'email' => $request->input('email'),
+            'telefono' => $request->input('telefono')
+        ]);
     }
 
-    public function show(Request $request, Estudiante $estudiante): Response
+    public function destroy($id)
     {
-        return view('estudiante.show', compact('estudiante'));
-    }
-
-    public function edit(Request $request, Estudiante $estudiante): Response
-    {
-        return view('estudiante.edit', compact('estudiante'));
-    }
-
-    public function update(EstudianteUpdateRequest $request, Estudiante $estudiante): Response
-    {
-        $estudiante->update($request->validated());
-
-        $request->session()->flash('estudiante.id', $estudiante->id);
-
-        return redirect()->route('estudiante.index');
-    }
-
-    public function destroy(Request $request, Estudiante $estudiante): Response
-    {
+        $estudiante = Estudiante::find($id);
         $estudiante->delete();
+    }
 
-        return redirect()->route('estudiante.index');
+    public function cambiarEstadoEstudiante($id) {
+        $estudiante = Estudiante::find($id);
+
+        $estado = $estudiante->estado == '1' ? '0' : '1';
+        $estudiante->update([
+            'estado' => $estado
+        ]);
+
+        return response()->json([
+            'resultado' => 'ok'
+        ]);
     }
 }

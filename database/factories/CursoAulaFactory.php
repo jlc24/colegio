@@ -4,7 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\;
+use App\Models;
+use App\Models\Aula;
 use App\Models\Curso;
 use App\Models\CursoAula;
 
@@ -24,7 +25,7 @@ class CursoAulaFactory extends Factory
     {
         return [
             'curso_id' => Curso::factory(),
-            'aula_id' => ::factory(),
+            'aula_id' => Aula::factory(),
             'gestion' => $this->faker->regexify('[A-Za-z0-9]{10}'),
         ];
     }

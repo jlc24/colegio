@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('curso_paralelos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('curso_id');
-            $table->foreignId('paralelo_id');
+            $table->unsignedBigInteger('curso_id');
+            $table->unsignedBigInteger('paralelo_id');
             $table->string('gestion', 10);
             $table->timestamps();
+
+            $table->foreign('curso_id')->references('id')->on('cursos');
+            $table->foreign('paralelo_id')->references('id')->on('paralelos');
         });
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('paralelos', function (Blueprint $table) {
             $table->id();
             $table->string('paralelo', 5);
-            $table->integer('estado');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
         });
     }

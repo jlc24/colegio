@@ -23,8 +23,7 @@ class AsignaturaFactory extends Factory
     {
         return [
             'nombre' => $this->faker->regexify('[A-Za-z0-9]{255}'),
-            'profesor_id' => Profesor::factory(),
-            'estado' => $this->faker->numberBetween(-10000, 10000),
+            'estado' => $this->faker->numberBetween(0, 1),
         ];
     }
 }

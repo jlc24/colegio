@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo', 20);
             $table->string('nombre', 50);
-            $table->integer('estado');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
         });
     }

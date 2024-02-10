@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('especialidad', 150);
             $table->string('email', 255);
             $table->string('telefono', 20);
-            $table->integer('estado');
+            $table->unsignedSmallInteger('estado')->default('1');
             $table->timestamps();
         });
     }

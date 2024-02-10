@@ -29,7 +29,7 @@ class EstudianteFactory extends Factory
             'genero' => $this->faker->regexify('[A-Za-z0-9]{50}'),
             'email' => $this->faker->safeEmail(),
             'telefono' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-            'estado' => $this->faker->numberBetween(-10000, 10000),
+            'estado' => $this->faker->numberBetween(0, 1),
         ];
     }
 }

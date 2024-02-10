@@ -11,50 +11,92 @@ use Illuminate\View\View;
 
 class ProfesorController extends Controller
 {
-    public function index(Request $request): Response
+    public function index()
     {
-        $profesors = Profesor::all();
-
-        return view('profesor.index', compact('profesors'));
+        return view('profesor.index');
     }
 
-    public function create(Request $request): Response
+    public function create(Request $request)
     {
-        return view('profesor.create');
+        //
     }
 
-    public function store(ProfesorStoreRequest $request): Response
+    public function store(ProfesorStoreRequest $request)
     {
-        $profesor = Profesor::create($request->validated());
+        $request->validated();
+        $existe = Profesor::where([
+            ['ci', $request->input('ci')],
+            ['nombres', $request->input('nombres')],
+            ['apellidos', $request->input('apellidos')]
+        ])->exists();
 
-        $request->session()->flash('profesor.id', $profesor->id);
+        if ($existe) {
+            return response()->json([
+                'resultado' => 'si'
+            ]);
+        }else{
+            Profesor::create([
+                'ci' => $request->input('ci'),
+                'nombres' => $request->input('nombres'),
+                'apellidos' => $request->input('apellidos'),
+                'direccion' => $request->input('direccion'),
+                'fec_nac' => $request->input('fec_nac'),
+                'especialidad' => $request->input('especialidad'),
+                'email' => $request->input('email'),
+                'telefono' => $request->input('telefono')
+            ]);
 
-        return redirect()->route('profesor.index');
+            return response()->json([
+                'resultado' => 'no'
+            ]);
+        }
     }
 
-    public function show(Request $request, Profesor $profesor): Response
+    public function show()
     {
-        return view('profesor.show', compact('profesor'));
+        $profesores = Profesor::all();
+        return response()->json($profesores);
     }
 
-    public function edit(Request $request, Profesor $profesor): Response
+    public function edit($id)
     {
-        return view('profesor.edit', compact('profesor'));
+        $profesor = Profesor::find($id);
+        return response()->json($profesor);
     }
 
-    public function update(ProfesorUpdateRequest $request, Profesor $profesor): Response
+    public function update(ProfesorUpdateRequest $request, $id)
     {
-        $profesor->update($request->validated());
-
-        $request->session()->flash('profesor.id', $profesor->id);
-
-        return redirect()->route('profesor.index');
+        $request->validated();
+        
+        $profesor = Profesor::find($id);
+        $profesor->update([
+            'ci' => $request->input('ci'),
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'direccion' => $request->input('direccion'),
+            'fec_nac' => $request->input('fec_nac'),
+            'especialidad' => $request->input('especialidad'),
+            'email' => $request->input('email'),
+            'telefono' => $request->input('telefono')
+        ]);
     }
 
-    public function destroy(Request $request, Profesor $profesor): Response
+    public function destroy($id)
     {
+        $profesor = Profesor::find($id);
         $profesor->delete();
+    }
 
-        return redirect()->route('profesor.index');
+    public function cambiarEstadoProfesor($id) {
+        $profesor = Profesor::find($id);
+
+        $estado = $profesor->estado == '1' ? '0' : '1';
+        $profesor->update([
+            'estado' => $estado
+        ]);
+
+        return response()->json([
+            'resultado' => 'ok'
+        ]);
     }
 }

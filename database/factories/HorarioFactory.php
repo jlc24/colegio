@@ -28,12 +28,10 @@ class HorarioFactory extends Factory
             'dia_semana' => $this->faker->date(),
             'hora_inicio' => $this->faker->time(),
             'hora_fin' => $this->faker->time(),
-            'ca_id' => Ca::factory(),
-            'pa_id' => Pa::factory(),
+            'ca_id' => CursoAula::factory(),
+            'pa_id' => ProfesorAsignatura::factory(),
             'gestion' => $this->faker->regexify('[A-Za-z0-9]{10}'),
-            'estado' => $this->faker->numberBetween(-10000, 10000),
-            'curso_aula_id' => CursoAula::factory(),
-            'profesor_asignatura_id' => ProfesorAsignatura::factory(),
+            'estado' => $this->faker->numberBetween(0, 1),
         ];
     }
 }

@@ -1,28 +1,29 @@
 <?php
 
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\ProfesorController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/estudiantes', [EstudianteController::class, 'index'])->name('estudiantes');
+Route::get('/estudiantes/show', [EstudianteController::class, 'show'])->name('estudiantes.show');
+Route::get('/estudiante/edit/{id}', [EstudianteController::class, 'edit'])->name('estudiante.edit');
+Route::post('/estudiante', [EstudianteController::class, 'store'])->name('estudiante.store');
+Route::post('/estudiante/{id}', [EstudianteController::class, 'update'])->name('estudiante.update');
+Route::delete('/estudiante/{id}', [EstudianteController::class, 'destroy'])->name('estudiante.destroy');
+Route::get('/cambiarEstadoEstudiante/{id}', [EstudianteController::class, 'cambiarEstadoEstudiante'])->name('estudiante.estado');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-Route::resource('estudiante', App\Http\Controllers\EstudianteController::class);
+Route::get('/profesores', [ProfesorController::class, 'index'])->name('profesores');
+Route::get('/profesores/show', [ProfesorController::class, 'show'])->name('profesores.show');
+Route::get('/profesor/edit/{id}', [ProfesorController::class, 'edit'])->name('profesor.edit');
+Route::post('/profesor', [ProfesorController::class, 'store'])->name('profesor.store');
+Route::post('/profesor/{id}', [ProfesorController::class, 'update'])->name('profesor.update');
+Route::delete('/profesor/{id}', [ProfesorController::class, 'destroy'])->name('profesor.destroy');
+Route::get('/cambiarEstadoProfesor/{id}', [ProfesorController::class, 'cambiarEstadoProfesor'])->name('profesor.estado');
 
 Route::resource('curso', App\Http\Controllers\CursoController::class);
 

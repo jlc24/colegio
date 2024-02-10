@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\;
+use App\Models\Nivel;
 use App\Models\Curso;
 use App\Models\CursoNivel;
 
@@ -24,7 +24,7 @@ class CursoNivelFactory extends Factory
     {
         return [
             'curso_id' => Curso::factory(),
-            'nivel_id' => ::factory(),
+            'nivel_id' => Nivel::factory(),
             'gestion' => $this->faker->regexify('[A-Za-z0-9]{10}'),
         ];
     }

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\;
+use App\Models\Paralelo;
 use App\Models\Curso;
 use App\Models\CursoParalelo;
 
@@ -24,7 +24,7 @@ class CursoParaleloFactory extends Factory
     {
         return [
             'curso_id' => Curso::factory(),
-            'paralelo_id' => ::factory(),
+            'paralelo_id' => Paralelo::factory(),
             'gestion' => $this->faker->regexify('[A-Za-z0-9]{10}'),
         ];
     }

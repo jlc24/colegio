@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('asignaturas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 255);
-            $table->foreignId('profesor_id');
-            $table->integer('estado');
+            $table->unsignedBigInteger('estado')->default('1');
             $table->timestamps();
         });
     }

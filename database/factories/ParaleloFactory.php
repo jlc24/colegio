@@ -22,7 +22,7 @@ class ParaleloFactory extends Factory
     {
         return [
             'paralelo' => $this->faker->regexify('[A-Za-z0-9]{5}'),
-            'estado' => $this->faker->numberBetween(-10000, 10000),
+            'estado' => $this->faker->numberBetween(0, 1),
         ];
     }
 }
